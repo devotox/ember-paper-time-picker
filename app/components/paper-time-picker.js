@@ -1,0 +1,1 @@
+export { default } from 'paper-time-picker/components/paper-time-picker';
