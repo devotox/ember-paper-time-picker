@@ -1,5 +1,6 @@
 import PaperInput from 'ember-paper/components/paper-input';
-import layout from 'ember-paper/templates/components/paper-input';
+// import layout from 'ember-paper/templates/components/paper-input';
+import layout from 'paper-time-picker/templates/components/paper-time-picker';
 import moment from 'moment';
 
 export default PaperInput.extend({
