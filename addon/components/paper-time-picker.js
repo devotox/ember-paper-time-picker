@@ -24,7 +24,7 @@ export default PaperInput.extend({
 			this.get('defaultOptions'),
 			this.get('options'), {
 				change: (value) => {
-					value = moment(value).format(this.options.momentFormat);
+					value = value ? moment(value).format(this.options.momentFormat) : '';
 					this.sendAction('onChange', value);
 				}
 			}
