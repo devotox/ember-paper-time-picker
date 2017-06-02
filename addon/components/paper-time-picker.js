@@ -5,8 +5,6 @@ import moment from 'moment';
 export default PaperInput.extend({
 	layout,
 
-	placeholder: 'Enter Time',
-
 	defaultOptions: {
 		interval: 60,
 		dynamic: false,
