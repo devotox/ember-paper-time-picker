@@ -1,6 +1,6 @@
 {
   "name": "paper-time-picker",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Ember Paper Timepicker addon",
   "keywords": [
     "ember-addon"
