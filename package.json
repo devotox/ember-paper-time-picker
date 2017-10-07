@@ -60,6 +60,6 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "https://devotox.github.io/paper-time-picker"
+    "demoURL": "https://devotox.github.io/ember-paper-time-picker"
   }
 }
