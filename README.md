@@ -10,6 +10,8 @@
 ## Description
 Input addon for [Ember Paper](https://github.com/miguelcobain/ember-paper)
 
+[DEMO](http://devotox.github.io/ember-paper-time-picker)
+
 ## Installation
 * `ember install paper-time-picker`
 
