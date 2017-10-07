@@ -1,26 +1,17 @@
 # paper-time-picker
 
-This README outlines the details of collaborating on this Ember addon.
+[![Ember Observer Score](http://emberobserver.com/badges/paper-time-picker.svg)](http://emberobserver.com/addons/paper-time-picker)
+[![Build Status](https://travis-ci.org/devotox/paper-time-picker.svg)](http://travis-ci.org/devotox/ember-paper-time-picker)
+[![Coverage Status](https://coveralls.io/repos/github/devotox/mber-loggly/badge.svg)](https://coveralls.io/github/devotox/empber-paper-time-picker)
+[![NPM Version](https://badge.fury.io/js/paper-time-picker.svg)](http://badge.fury.io/js/paper-time-picker)
+[![NPM Downloads](https://img.shields.io/npm/dm/paper-time-picker.svg)](https://www.npmjs.org/package/paper-time-picker)
+[![Greenkeeper](https://badges.greenkeeper.io/devotox/ember-paper-time-picker.svg)](https://greenkeeper.io/)
+
+## Description
+Input addon for [Ember Paper](https://github.com/miguelcobain/ember-paper)
 
 ## Installation
+* `ember install paper-time-picker`
 
-* `git clone <repository-url>` this repository
-* `cd paper-time-picker`
-* `npm install`
-
-## Running
-
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-## Running Tests
-
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+#### License
+MIT license.
