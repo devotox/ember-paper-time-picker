@@ -5594,7 +5594,7 @@ var n=Ember.getOwner}),define("moment/index",["exports","moment/lib"],function(e
 function n(e,n){if(t.default.isMoment(e)&&t.default.isMoment(n))return e.isBefore(n)?-1:e.isSame(n)?0:1
 throw new Error("Arguments provided to `compare` are not moment objects")}Object.defineProperty(e,"__esModule",{value:!0}),t.default.prototype.compare=n,t.default.compare=n,t.default.prototype.clone=function(){return(0,t.default)(this)},e.default=t.default}),define("moment/lib",["exports"],function(e){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=self.moment}),define("paper-time-picker/components/paper-time-picker",["exports","moment","ember-paper/components/paper-input","ember-paper/templates/components/paper-input"],function(e,t,n,r){"use strict"
-Object.defineProperty(e,"__esModule",{value:!0}),e.default=n.default.extend({layout:r.default,defaultOptions:{interval:60,dynamic:!1,dropdown:!0,scrollbar:!0,minTime:"12:00am",maxTime:"11:00pm",startTime:"12:00am",timeFormat:"h:mm p",momentFormat:"h:mm a"},didInsertElement:function(){var e=this
+Object.defineProperty(e,"__esModule",{value:!0}),e.default=n.default.extend({layout:r.default,defaultOptions:{interval:60,dynamic:!1,dropdown:!0,scrollbar:!1,minTime:"12:00am",maxTime:"11:00pm",startTime:"12:00am",timeFormat:"h:mm a",momentFormat:"h:mm a"},didInsertElement:function(){var e=this
 this._super.apply(this,arguments),this.set("options",Object.assign(this.get("defaultOptions"),this.get("options"),{change:function(n){n=n?(0,t.default)(n).format(e.options.momentFormat):"",e.sendAction("onChange",n)}}))
 var n=this.get("options"),r=this.$("input").timepicker(n)
 this.set("timepicker",r)},willDestroyElement:function(){this._super.apply(this,arguments)
