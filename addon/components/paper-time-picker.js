@@ -9,11 +9,11 @@ export default PaperInput.extend({
 		interval: 60,
 		dynamic: false,
 		dropdown: true,
-		scrollbar: true,
+		scrollbar: false,
 		minTime: '12:00am',
 		maxTime: '11:00pm',
 		startTime: '12:00am',
-		timeFormat: 'h:mm p',
+		timeFormat: 'h:mm a',
 		momentFormat: 'h:mm a'
 	},
 
