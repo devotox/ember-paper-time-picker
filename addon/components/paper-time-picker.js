@@ -5,6 +5,8 @@ import layout from 'ember-paper/templates/components/paper-input';
 export default PaperInput.extend({
 	layout,
 
+	options: {},
+
 	defaultOptions: {
 		interval: 60,
 		dynamic: false,
@@ -33,7 +35,9 @@ export default PaperInput.extend({
 		let options = this.get('options');
 
 		// Create a new instance of the timepicker.
-		let timepicker = this.$('input').timepicker(options);
+		let timepicker = this.$ && this.$('input')
+			&& this.$('input').timepicker(options);
+
 		this.set('timepicker', timepicker);
 	},
 
@@ -43,7 +47,7 @@ export default PaperInput.extend({
 		let timepicker = this.get('timepicker');
 
 		// If the timepicker exists, destroy it on our way out
-		if (timepicker.data('TimePicker') !== null) {
+		if (timepicker && timepicker.data('TimePicker') !== null) {
 			timepicker.timepicker().destroy();
 		}
 	}

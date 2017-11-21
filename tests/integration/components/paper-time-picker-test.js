@@ -10,13 +10,13 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{paper-time-picker}}`);
+  this.render(hbs`{{paper-time-picker onChange=null}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#paper-time-picker}}
+    {{#paper-time-picker onChange=null}}
       template block text
     {{/paper-time-picker}}
   `);
