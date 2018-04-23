@@ -18,7 +18,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-paper-time-picker
+ember install ember-paper-time-picker2
 ```
 
 
