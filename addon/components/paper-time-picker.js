@@ -1,33 +1,35 @@
 import moment from 'moment';
+
 import PaperInput from 'ember-paper/components/paper-input';
+
 import layout from 'ember-paper/templates/components/paper-input';
+
+const defaultOptions = {
+	interval: 60,
+	dynamic: false,
+	dropdown: true,
+	scrollbar: false,
+	minTime: '12:00am',
+	maxTime: '11:00pm',
+	startTime: '12:00am',
+	timeFormat: 'h:mm a',
+	momentFormat: 'h:mm a'
+};
 
 export default PaperInput.extend({
 	layout,
 
-	options: {},
-
-	defaultOptions: {
-		interval: 60,
-		dynamic: false,
-		dropdown: true,
-		scrollbar: false,
-		minTime: '12:00am',
-		maxTime: '11:00pm',
-		startTime: '12:00am',
-		timeFormat: 'h:mm a',
-		momentFormat: 'h:mm a'
-	},
+	options: null,
 
 	didInsertElement() {
 		this._super(...arguments);
 
 		this.set('options', Object.assign(
-			this.get('defaultOptions'),
+			defaultOptions,
 			this.get('options'), {
 				change: (value) => {
 					value = value ? moment(value).format(this.options.momentFormat) : '';
-					this.sendAction('onChange', value);
+					this.sendAction('onChange', value); // eslint-disable-line
 				}
 			}
 		));
