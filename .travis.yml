@@ -1,42 +1,77 @@
+---
 language: node_js
 node_js:
-- '6'
+  # we recommend testing addons with the same minimum supported node version as Ember CLI
+  # so that your addon works for all apps
+  - "6"
+
 sudo: false
 dist: trusty
+
 addons:
   chrome: stable
+
 cache:
   yarn: true
+
 env:
-  matrix:
-  - EMBER_TRY_SCENARIO=ember-lts-2.12
-  - EMBER_TRY_SCENARIO=ember-lts-2.16
-  - EMBER_TRY_SCENARIO=ember-lts-2.18
-  - EMBER_TRY_SCENARIO=ember-release
-  - EMBER_TRY_SCENARIO=ember-beta
-  - EMBER_TRY_SCENARIO=ember-canary
-  - EMBER_TRY_SCENARIO=ember-default
   global:
     # See https://git.io/vdao3 for details.
     JOBS: 1
     secure: fOTO/HpUT0xsfml9iXuEL9qBu0NVErcig6CmrS1DFv7f4x9/mYQMNzLUv5b6VBPqGHeFNHiGaUUza3Ufc5KpL7DOu/1y6TFQlSoM6MRRdIXb+50MObvkJ4wXwYJH7Zrb4g8RTaBOY9uU5XQkm/E6GWWF3NiYFoVzCYPNSgAALko1caoEX2hoJNXJSd0T4G+gxtxc2g08RGunBPLqIyy2avMRN4yq0WDN2NbBrztM01FA5RoOLPyX0hhzyIZ+45z34wKvZtu7rj9h1KbFOZOVFJWpHDa0bXxhF63ldxPINe2QMOSsOD22Czk1+IKyC+88gtkvUq7pGUaJK6YdVDRcW9G/DMHVy/IE2aFabrPDVgzrmeCoVKzATzt8nMfIMTTu9Unoa5fdohpJ0NPhYnPfVAGfJ+2MPITgP+x2X6M5+KgHCBdaIgwBVnZE9DTb1L9c/Eh50zeHHbfv9L+NVlbQFzMWNj+kKWMj0qwh6JPpSFiKaOvTK6XP+NSUc7euAZgqK6lwqS07pvcql4qvzbeRWyn/GZuRHOGvfkUNuvLee8dMKfpF3s1VQ6blHHqKB8qH2ifxawiztWgUkYxK0GFTk//ZopLzP90bLl0JiGlg517tp5V9eBOK5ZlPwsSOhD+wta9gCssPjK4i2H2IwLox7AqXegigBMdqIbXz9LaFVAY=
-matrix:
-  fast_finish: true
+
+branches:
+  only:
+    - master
+    # npm version tags
+    - /^v\d+\.\d+\.\d+/
+    # greenkeeper branches
+    - /^greenkeeper\/.*$/
+
+jobs:
+  fail_fast: true
   allow_failures:
-  - env: EMBER_TRY_SCENARIO=ember-canary
+    - env: EMBER_TRY_SCENARIO=ember-canary
+
+  include:
+    # runs linting and tests with current locked deps
+
+    - stage: "Tests"
+      name: "Tests"
+      install:
+        - yarn install --non-interactive
+      script:
+        - yarn lint:hbs
+        - yarn lint:js
+        - COVERAGE=true yarn test
+        - codecov
+
+    # - name: "Floating Dependencies"
+    #   script:
+    #     - yarn test
+
+    # we recommend new addons test the current and previous LTS
+    # as well as latest stable release (bonus points to beta/canary)
+    - stage: "Additional Tests"
+      env: EMBER_TRY_SCENARIO=ember-lts-2.18
+    - env: EMBER_TRY_SCENARIO=ember-lts-3.4
+    - env: EMBER_TRY_SCENARIO=ember-release
+    - env: EMBER_TRY_SCENARIO=ember-beta
+    - env: EMBER_TRY_SCENARIO=ember-canary
+    - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
+
 before_install:
-- curl -o- -L https://yarnpkg.com/install.sh | bash
-- export PATH=$HOME/.yarn/bin:$PATH
-- yarn global add greenkeeper-lockfile@1
-- yarn global add codecov
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+  - yarn global add greenkeeper-lockfile@1
+  - yarn global add codecov
+
 install:
-- yarn install --no-lockfile --non-interactive
-before_script: greenkeeper-lockfile-update
-after_script: greenkeeper-lockfile-upload
+  - yarn install --no-lockfile --non-interactive
+
 script:
-- yarn lint:js
-- COVERAGE=true node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
-- codecov
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
+
 notifications:
   webhooks:
     urls:
@@ -49,3 +84,13 @@ notifications:
   slack:
     rooms:
       secure: fjr1vR2BvokEEf9s0wiXqHABT7vidp54huGm23Stm8WLhJ7AuIwbTYnp5dRCNyhbm6at27tip9eupie7TNreDN45tP0ZhgaJmD+tlc/wu/O3BvgH5k/BpLILYvxXRfOKASFrLTEZnZbt868kc70jHpaNXfQ6c6TXedVQ2W1uGHnXlR8jjPq74X0w7x+w20QPTDz53A8F3KIBa40Y2KdpZDzqaPqEL2bQuWtxK4X7s+CnNMgZyrgZuZn+i4wrShO28ZRy47kaEKe6uVmqTFMgYQe0U4tTP9K3aUudO3fgwnWbBafYo9iN3ZRfQILypd4TNn2EDtpNSLEcdTap8196bNk1LkaGY0VLc0W8TlJZnTirnnTdMBn3N/YOOoEEIXnbG8ErDAEFeFgrQn8KGi8eLzuAk5dGQEVPccDenMgLSnZuzoGkHmSoSS9iIM0kn1F2EFZcOuYOjFe719RTYAbqofNpAxHevg1d9DP3Q/FzGSwxhxuBHbR//vbqyILJFT7l6NYcf2pXciC7dabtn8qKk+zkwr3EM/Cl9bjw3Phm/yoMK3CaZDpn2UhJWlnuDZOli+RlKuRh0500fYU8I3rVYhrpUEJB312CumjVLosEIpN18q9VY6ZwZBxKDgPHIyZ0l2uKMhxqscS0/iF7hpyxlibW1gkU5b4l3MNI/YWuLkA=
+
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: devo.tox.89@gmail.com
+  api_key:
+    secure: ue+xaZj8bk8x6jYhJObMJO4pDaO37YKbRlLtYNbecBtX9ZN5GpUlx1XkGK7qesAqJ2PSBx3+LOjgGhWr2P/2OpK98CN8DnfeRV7S/niv/0YTaTzKlZ3KmkW+T6ugmfuFRqow/kk5O8wlg8MijmLMUE0Cjj1eZxM4TviqC/m9H5JdSMHR7XwOJbRTfiztp8JW4pMuzh02u/97b9DZ02+HBFyzSMjII7IoU5VIySF1K6iVSr1UglWRTVB4lrq2DREIHgh8zQAWF4736xk4fd4SXa6CO+kKywU0jcE7Tu8ycsrpxbtcS6/OMt0GDjJtblGfruU/UuylFh2pMQY8iYIt8XCf6bx4H8rpwOVqEjoRCoR+LaT1L5d6rupaDgnlmXe5Jqn0U/VxS/QXWMFZSKK196T9S2M/F5z1KfcH7OGzbjyWJIe5CkNgoSiYycocO8qirlX5sYr2QUCBgl18FzNfU6w20zFMZtn4Hoy+GIAgU/3VznVbO8F2uNMcNtmFVIfGIO/zauHx2GQ3edvVNs9e79XRKoL2TeC3KupMGqsl9LRll4oWmaJ7CrLxhhbdMXFgs03cREpSRSjLwsjT95c/HV8nsoLARV4TLKf6oc6Iny30ncDlxEd5qsg0F0Y2RePoRhfYned78ytjigSyoRcL/guNUsDPZcekzPYvaTqYe0Q
+  on:
+    tags: true
+    repo: devotox/ember-paper-time-picker

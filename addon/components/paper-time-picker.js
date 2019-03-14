@@ -22,6 +22,8 @@ export default PaperInput.extend({
 	options: null,
 
 	didInsertElement() {
+		if (this.isDestroyed || this.isDestroying) { return; }
+
 		this._super(...arguments);
 
 		this.set('options', Object.assign(
@@ -29,21 +31,26 @@ export default PaperInput.extend({
 			this.get('options'), {
 				change: (value) => {
 					value = value ? moment(value).format(this.options.momentFormat) : '';
-					this.sendAction('onChange', value); // eslint-disable-line
+					this.onChange(value);
 				}
 			}
 		));
 
 		let options = this.get('options');
 
+		let field = this.element.querySelector('input');
+		
+		this.set('field', field);
+
 		// Create a new instance of the timepicker.
-		let timepicker = this.$ && this.$('input')
-			&& this.$('input').timepicker(options);
+		let timepicker = this.$(field).timepicker(options);
 
 		this.set('timepicker', timepicker);
 	},
 
 	willDestroyElement() {
+		if (this.isDestroyed || this.isDestroying) { return; }
+
 		this._super(...arguments);
 
 		let timepicker = this.get('timepicker');
