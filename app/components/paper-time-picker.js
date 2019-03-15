@@ -1,1 +1,1 @@
-export { default } from 'ember-paper-time-picker/components/paper-time-picker';
+export { default } from 'ember-paper-time-picker2/components/paper-time-picker';
